@@ -2,7 +2,7 @@ import { stat } from "fs";
 
 export const state = () => ({
   layout: {
-    drawerLeft: false,
+    drawerLeft: true,
     subDrawerLeft: false,
     subDrawerRight: false,
     drawerRight: false,

@@ -60,7 +60,6 @@ module.exports = {
   */
   css: ["~/assets/css/main.css", "~/assets/css/app.styl"],
   plugins: [
-
     '~/plugins/vuetify.js',
   ],
   build: {
