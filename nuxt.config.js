@@ -1,3 +1,6 @@
+
+const serverMiddleware = require('./server/build/index.js');
+
 const parseArgs = require("minimist")
 const argv = parseArgs(process.argv.slice(2), {
   alias: {
@@ -71,5 +74,11 @@ module.exports = {
     "@nuxtjs/axios",
     "~/modules/typescript.js"
   ],
-  axios: {}
+  axios: {},
+  serverMiddleware: [
+    {
+      path: '/api',
+      handler: serverMiddleware.instance,
+    }
+  ]
 }

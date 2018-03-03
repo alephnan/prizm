@@ -18,8 +18,8 @@
     "stylus-loader": "^3.0.2"
   },
   "scripts": {
-    "dev": "nuxt",
-    "build": "nuxt build",
+    "dev": "tsc -p server && nuxt",
+    "build": "tsc -p server && nuxt build",
     "start": "nuxt start",
     "generate": "nuxt generate"
   }
