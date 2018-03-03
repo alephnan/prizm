@@ -25,7 +25,7 @@ module.exports = {
       `http://${host}:${port}`
   },
   head: {
-    title: "tt1",
+    title: "Prism",
     meta: [
       { charset: "utf-8" },
       {
