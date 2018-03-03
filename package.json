@@ -19,8 +19,12 @@
   },
   "scripts": {
     "dev": "tsc -p server && nuxt",
+    "devserver": "nodemon --watch server --ext ts --exec \"tsc -p server && nuxt\"",
     "build": "tsc -p server && nuxt build",
     "start": "nuxt start",
     "generate": "nuxt generate"
+  },
+  "devDependencies": {
+    "nodemon": "^1.17.1"
   }
 }
