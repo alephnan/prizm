@@ -2,6 +2,7 @@ FROM node:8.2.1
 
 ENV NODE_ENV=production
 ENV HOST 0.0.0.0
+ENV GOOGLE_APPLICATION_CREDENTIALS=server/gcp_credentials.json
 
 RUN mkdir -p /app
 COPY . /app

@@ -12,3 +12,4 @@ dist
 
 # Server
 /server/build/*
+/server/gcp_credentials.json
