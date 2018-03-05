@@ -27,7 +27,20 @@
       clipped-right
     >
       <v-toolbar-side-icon @click.stop="toggleLeftDrawer()"></v-toolbar-side-icon>
-      <v-toolbar-title>Google Cloud Platform</v-toolbar-title>
+      <v-toolbar-title>{{project}}</v-toolbar-title>
+      <v-menu offset-y>
+        <v-btn fab slot="activator">
+          <v-icon large color="primary">
+            expand_more
+          </v-icon>
+        </v-btn>
+        <v-list>
+          <v-list-tile v-for="project in projects" :key="project.name"
+              @click="$router.push(`/project/${project.name}/source`)">
+            <v-list-tile-title>{{ project.name }}</v-list-tile-title>
+          </v-list-tile>
+        </v-list>
+      </v-menu>
       <v-spacer></v-spacer>
       <v-text-field
         placeholder="Search..."
@@ -58,14 +71,6 @@
             <v-list-tile-title>Dashboard</v-list-tile-title>
           </v-list-tile-content>
         </v-list-tile>
-        <v-list-tile @click="$router.push('/editor')">
-          <v-list-tile-action>
-            <v-icon>settings</v-icon>
-          </v-list-tile-action>
-          <v-list-tile-content>
-            <v-list-tile-title>Editor</v-list-tile-title>
-          </v-list-tile-content>
-        </v-list-tile>
         <v-list-tile @click.stop="toggleLeftSubDrawer()">
           <v-list-tile-action>
             <v-icon>exit_to_app</v-icon>
@@ -73,6 +78,14 @@
           <v-list-tile-content>
             <v-list-tile-title>Open Temporary Drawer</v-list-tile-title>
           </v-list-tile-content>
+        </v-list-tile>
+        <v-subheader>
+          Source
+        </v-subheader>
+        <v-list-tile v-for="source in sources" :key="source.name">
+          <v-list-tile-title @click.stop="selectSource(project, source)">
+            {{ source.name }}
+          </v-list-tile-title>
         </v-list-tile>
       </v-list>
     </v-navigation-drawer>
@@ -112,9 +125,7 @@ import {
   State
 } from "vuex-class"
 import MonacoEditor from '~/components/Monaco.vue'
-import CODE_BOILERPLATE from '~/static/code_boilerplate'
 import debounce from 'debounce'
-
 
 @Component({
   components: {
@@ -122,7 +133,9 @@ import debounce from 'debounce'
   }
 })
 export default class extends Vue {
-   @Provide() defaultCode = CODE_BOILERPLATE
+  @State( state => state.project ) project
+  @State( state => state.projects ) projects
+  @State( state => state.sources ) sources
 
   @State( state => state.layout.drawerLeft ) drawerLeft
   @State( state => state.layout.drawerRight ) drawerRight
@@ -137,6 +150,10 @@ export default class extends Vue {
   queueLayoutRefresh = debounce((e) => {
     this.$store.dispatch('requestLayoutRefresh')
   }, 500);
+
+  selectSource(project, source) {
+    this.$router.push(`/project/${project}/source/${encodeURIComponent(source.name)}/editor`)
+  }
 }
 </script>
 
