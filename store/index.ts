@@ -1,6 +1,8 @@
 import { stat } from "fs";
 import axios from '~/plugins/axios'
 
+export type view = 'editor' | 'other';
+
 export const state = () => ({
   layout: {
     drawerLeft: true,
@@ -17,6 +19,7 @@ export const state = () => ({
   source: {
     content: ''
   },
+  view: 'other',
 })
 
 export const mutations = {
@@ -58,6 +61,9 @@ export const mutations = {
   },
   flushSources(state) {
     state.sourcesPromise = null;
+  },
+  setView(state, view: view) {
+    state.view = view;
   }
 }
 
@@ -123,4 +129,7 @@ export const actions = {
       commit('loadSource', sourceId);
     })
   },
+  async setView({ commit }, view: view) {
+    commit('setView', view);
+  }
 }

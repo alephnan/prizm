@@ -76,6 +76,10 @@ export default class extends Vue {
    (window as any).monaco.editor.setModelLanguage(this.editor.getModel(), this.language)
   }
 
+  @Watch('code') changeCode() {
+    this.editor.getModel().setValue(this.code)
+  }
+
   @Watch('highlighted', {  deep: true }) highlightLines(lines) {
     if (!this.editor) {
       return;

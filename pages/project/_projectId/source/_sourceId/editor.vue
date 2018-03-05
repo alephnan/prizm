@@ -50,7 +50,9 @@ export default class extends Vue {
     // NUXT not invoking ancestor component's fetch (where selectProject triggered).
     // Implicitly, the selectProject action will invoke it's dependenc(ies) loadProjects.
     // selectSource will invoke it's dependenc(ies) loadSources.
-    return store.dispatch('selectProject', projectId).then(() => {
+    return store.dispatch('setView', 'editor').then(() => {
+      return store.dispatch('selectProject', projectId)
+    }).then(() => {
       return store.dispatch('selectSource', {
         projectId,
         sourceId

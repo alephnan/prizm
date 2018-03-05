@@ -82,7 +82,7 @@
         <v-subheader>
           Source
         </v-subheader>
-        <v-list-tile v-for="source in sources" :key="source.name">
+        <v-list-tile v-for="source in sources" :key="source.name" v-ripple>
           <v-list-tile-title @click.stop="selectSource(project, source)">
             {{ source.name }}
           </v-list-tile-title>
@@ -152,7 +152,18 @@ export default class extends Vue {
   }, 500);
 
   selectSource(project, source) {
-    this.$router.push(`/project/${project}/source/${encodeURIComponent(source.name)}/editor`)
+    const path = `/project/${project}/source/${encodeURIComponent(source.name)}/editor`;
+    // When switching between files, manually update source state, preventing re-render of editor.
+    if(this.$store.state.view == 'editor' && (typeof (history.pushState) != "undefined")) {
+      this.$store.dispatch('selectSource', {
+        projectId: project,
+        sourceId: source.name
+      }).then(() => {
+        history.replaceState({}, '', path);
+      });
+    } else {
+      this.$router.replace(`/project/${project}/source/${encodeURIComponent(source.name)}/editor`)
+    }
   }
 }
 </script>

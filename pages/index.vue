@@ -14,6 +14,9 @@ import {
 @Component({
 })
 export default class extends Vue {
+  fetch({store}) {
+    return store.dispatch('setView', 'other');
+  }
 }
 
 
